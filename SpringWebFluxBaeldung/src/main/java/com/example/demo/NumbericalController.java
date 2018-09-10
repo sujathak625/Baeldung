@@ -27,17 +27,7 @@ public class NumbericalController {
 		      
 	}
 	
-	@RequestMapping(value="/getCurrentTime")
-	public Flux<String> getTime() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Calendar cal = Calendar.getInstance();
-		return Flux.fromStream(Stream.generate(() -> dateFormat.format(cal.getTime()))
-	            .map(s -> String.valueOf(s))
-	            .peek((msg) -> {
-	                logger.info(msg);
-	            }))	           
-	            .delayElements(Duration.ofSeconds(1));		
-	}
+
 	
 
 }

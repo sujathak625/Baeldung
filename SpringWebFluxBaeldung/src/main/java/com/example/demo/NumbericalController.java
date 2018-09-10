@@ -18,16 +18,12 @@ import reactor.core.publisher.Flux;
 public class NumbericalController {
 	Logger logger = (Logger) LoggerFactory.getLogger(NumbericalController.class);
 	int number = 0;
-	@RequestMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE,value="/generateNumbers")
-	public Flux<Integer> getNumber() {
-		
-		return Flux.fromStream(Stream.generate(() -> number++)	            	           
-	            .map(s -> Integer.valueOf(s)))
-	            .delayElements(Duration.ofSeconds(5));		
-		      
-	}
-	
 
-	
+	@RequestMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE, value = "/generateNumbers")
+	public Flux<Integer> getNumber() {
+
+		return Flux.fromStream(Stream.generate(() -> number++).map(s -> Integer.valueOf(s)))
+				.delayElements(Duration.ofSeconds(5));
+	}
 
 }

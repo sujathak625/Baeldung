@@ -25,5 +25,4 @@ public class NumbericalController {
 		return Flux.fromStream(Stream.generate(() -> number++).map(s -> Integer.valueOf(s)))
 				.delayElements(Duration.ofSeconds(5));
 	}
-
 }

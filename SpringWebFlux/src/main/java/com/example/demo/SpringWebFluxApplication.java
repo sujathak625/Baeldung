@@ -1,6 +1,5 @@
 package com.example.demo;
 
-
 import java.util.Collections;
 
 import org.slf4j.Logger;
@@ -17,30 +16,24 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class SpringWebFluxApplication {
 
 	Logger logger = LoggerFactory.getLogger(SpringWebFluxApplication.class);
+
 	public static void main(String[] args) {
-		  new SpringApplicationBuilder(SpringWebFluxApplication.class)
-          .properties(Collections.singletonMap("server.port", "8082"))
-          .run(args);
-		
+		new SpringApplicationBuilder(SpringWebFluxApplication.class)
+				.properties(Collections.singletonMap("server.port", "8082")).run(args);
+
 	}
-	
+
 	@Bean
 	WebClient client() {
 		return WebClient.create("http://localhost:8080");
 	}
-	
+
 	@Bean
-    CommandLineRunner demo(WebClient client) {
-        return args -> {
-            client.get()
-                    .uri("/generateNumbers")
-                    .accept(MediaType.TEXT_EVENT_STREAM)                    
-                    .exchange()
-                    .flatMapMany(clientEvent -> clientEvent.bodyToFlux(Integer.class))                    
-                    .subscribe(
-                    		msg->
-                    		logger.info(Integer.toString(msg))                    	
-                    );
-        };
-    }
+	CommandLineRunner demo(WebClient client) {
+		return args -> {
+			client.get().uri("/generateNumbers").accept(MediaType.TEXT_EVENT_STREAM).exchange()
+					.flatMapMany(clientEvent -> clientEvent.bodyToFlux(Integer.class))
+					.subscribe(msg -> logger.info(Integer.toString(msg)));
+		};
+	}
 }
